@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/logo.png',width: MediaQuery.of(context).size.width*0.3,),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  prefixIcon: Icon(Icons.email),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                obscureText: true,
+                controller: passwordController,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text('Forgot password? Click here',),
+              SizedBox(
+                height: 20,
+              ),
+
+              SizedBox(
+
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+
+                  onPressed: () => {},
+                  child: Text('Login',style: TextStyle(fontSize: 18),),
+                  style:ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                      EdgeInsets.all(20)
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        // side: BorderSide(
+                        //
+                        //   width: 30,
+                        // ),
+                      ),
+                    ),
+                  )
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
