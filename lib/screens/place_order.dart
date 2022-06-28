@@ -1,7 +1,9 @@
+import 'package:cff_ap/components/items_counter_bar.dart';
 import 'package:cff_ap/models/order.dart';
 import 'package:cff_ap/models/order_product.dart';
 import 'package:cff_ap/models/product.dart';
 import 'package:cff_ap/screens/order_summary.dart';
+import 'package:cff_ap/screens/schedule_order.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,16 +56,42 @@ class _PlaceOrderState extends State<PlaceOrder> {
       return Container(
         child: Column(
           children: [
+            ItemsCounterBar(
+                itemsNumber: order.caulculateTotalOrderItemsNumber()),
             Container(
               padding: EdgeInsets.all(10),
               child: Row(
                 children: [
-                  Expanded(flex: 1,child: IconButton(
-                      onPressed: () {
-                        order.clearOrder();
-                      },
-                      icon:Icon(Icons.delete)
-                  )),
+                  Expanded(
+                      flex: 1,
+                      child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext ctx) {
+                                  return AlertDialog(
+                                    title: Text('Delete'),
+                                    content:
+                                        Text('Do you want to clear the order?'),
+                                    actionsAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            order.clearOrder();
+                                            Navigator.pop(ctx);
+                                          },
+                                          child: Text('YES')),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(ctx);
+                                          },
+                                          child: Text('CANCEL'))
+                                    ],
+                                  );
+                                });
+                          },
+                          icon: Icon(Icons.delete))),
                   Expanded(
                     flex: 4,
                     child: TextField(
@@ -76,29 +104,33 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           prefixIcon: Icon(Icons.search),
                           suffixIcon: searchController.text.length > 0
                               ? IconButton(
-                                  onPressed: ()  {
+                                  onPressed: () {
                                     this.setState(() {
-                                  products = initialProducts;
-                                  searchController.clear();
-
+                                      products = initialProducts;
+                                      searchController.clear();
                                     });
-                                    FocusManager.instance.primaryFocus?.unfocus();
-                                  }, icon: Icon(Icons.cancel))
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  icon: Icon(Icons.cancel))
                               : null,
                           border: OutlineInputBorder(
                               borderSide:
                                   BorderSide(width: 0, color: Colors.white))),
                     ),
                   ),
-                  Expanded(flex: 1,child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,MaterialPageRoute(builder: (context) => const OrderSummary())
-                      );
-                    },
-                    icon:Icon(Icons.shopping_cart)
-                  )),
-
+                  Expanded(
+                      flex: 1,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                // context,MaterialPageRoute(builder: (context) => const OrderSummary())
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ScheduleOrder()));
+                          },
+                          icon: Icon(Icons.shopping_cart))),
                 ],
               ),
             ),

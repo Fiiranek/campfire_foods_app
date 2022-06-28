@@ -4,10 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'product.dart';
 
 class Order extends ChangeNotifier {
-  List<OrderProduct> orderList = [
-    // new OrderProduct(new Product('rib', 'xyz'), 1),
-    // new OrderProduct(new Product('apple', 'appleid'), 10),
-  ];
+  List<OrderProduct> orderList = [];
+
+  // late OrderSummary orderSummary;
+
+  String orderLocation = "Cincinatti";
+  DateTime orderDate = new DateTime(2020);
+
+  void setOrderLocation(String newOrderLocation){
+    orderLocation = newOrderLocation;
+    notifyListeners();
+  }
+
+  void setOrderDate(DateTime newOrderDate){
+    orderDate =  newOrderDate;
+    notifyListeners();
+  }
 
   void addProductToOrder(Product product, int quantity) {
     bool isProductAlreadyInOrder =

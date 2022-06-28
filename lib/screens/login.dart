@@ -1,3 +1,4 @@
+import 'package:cff_ap/styles.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -69,21 +70,7 @@ class _LoginState extends State<Login> {
 
                   onPressed: () => {},
                   child: Text('Login',style: TextStyle(fontSize: 18),),
-                  style:ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.all(20)
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        // side: BorderSide(
-                        //
-                        //   width: 30,
-                        // ),
-                      ),
-                    ),
-                  )
+                  style:btnStyle
                 ),
               )
             ],
