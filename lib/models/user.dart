@@ -6,10 +6,12 @@ import 'product.dart';
 
 class User extends ChangeNotifier {
 
+
+
   void login(){
 
     notifyListeners();
   }
 
- 
+
 }
