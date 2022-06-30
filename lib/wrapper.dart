@@ -1,5 +1,10 @@
+import 'package:cff_ap/providers/user.dart';
+import 'package:cff_ap/screens/home.dart';
+import 'package:cff_ap/screens/loading.dart';
+import 'package:cff_ap/screens/login.dart';
 import 'package:cff_ap/screens/place_order.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -9,42 +14,29 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  bool isLoading = true;
 
-  final List<Widget> widgets = [
-    PlaceOrder(),
-    PlaceOrder(),
-    PlaceOrder(),
-  ];
-  int _index = 0;
+  @override
+  void initState() {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      // auth = Provider.of<Auth>(context, listen: false);
+      final auth = Provider.of<User>(context, listen: false);
+      final isUserLogged = await auth.initUser();
+      isLoading = false;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.person))
-        ],
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (idx){
-          print(idx);
-          setState(() {
-            _index = idx;
-          });
-        },
-        currentIndex: _index,
-
-        items: [
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),label: 'Place Order'),
-        BottomNavigationBarItem(icon: Icon(Icons.list),label: 'View Orders'),
-        BottomNavigationBarItem(icon: Icon(Icons.restore_from_trash),label: 'Waste')
-      ],
-
-      ),
-      // body: widgets[_index],
-      body:PlaceOrder(),
-    );
+    return Consumer<User>(builder: (context, auth, child) {
+      if (isLoading) {
+        return const Loading();
+      }
+      if (auth.isLogged) {
+        return const Home();
+      }
+      return const Login();
+    });
   }
 }

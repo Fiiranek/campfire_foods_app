@@ -1,7 +1,7 @@
 import 'package:cff_ap/models/order_product.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'product.dart';
+import '../models/product.dart';
 
 class Order extends ChangeNotifier {
   List<OrderProduct> orderList = [];

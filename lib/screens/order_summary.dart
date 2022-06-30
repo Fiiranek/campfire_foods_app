@@ -1,5 +1,5 @@
 import 'package:cff_ap/components/items_counter_bar.dart';
-import 'package:cff_ap/models/order.dart';
+import 'package:cff_ap/providers/order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
