@@ -72,9 +72,9 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                      onPressed: () => {
-                        // user.login(emailController.text, passwordController.text)
-                        user.login("admin@email.com","admin")
+                      onPressed: () async {
+                        bool loginResult = await  user.login(emailController.text, passwordController.text);
+                        print(loginResult);
                       },
                       child: Text(
                         'Login',

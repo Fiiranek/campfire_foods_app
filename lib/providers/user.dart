@@ -8,22 +8,40 @@ class User extends ChangeNotifier {
   String authToken = "";
   bool isLogged = false;
 
-  void login(String email, String password) {
+  Future<bool> login(String email, String password) async {
     Future<TokenAuthResponse>? _futureToken =
         createTokenAuthResponse(email, password);
-    _futureToken.then((tokenData) {
-      authToken = tokenData.token;
-      isLogged=true;
-      print('auth token' + authToken);
-      saveUserAuthToken(authToken);
-      notifyListeners();
-    });
+    // _futureToken.then((tokenData) {
+    //   if(tokenData.token.isNotEmpty){
+    //     authToken = tokenData.token;
+    //     isLogged = true;
+    //     saveUserAuthToken(authToken);
+    //     notifyListeners();
+    //     return true;
+    //   }
+    //   else {
+    //     return false;
+    //   }
+    // });
+    final tokenData = await _futureToken;
+    if(tokenData is TokenAuthResponse){
+      if (tokenData.token.isNotEmpty) {
+        authToken = tokenData.token;
+        isLogged = true;
+        saveUserAuthToken(authToken);
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    }
+    else return false;
   }
 
   void logout() {
     deleteUserAuthToken();
     authToken = "";
-    isLogged=false;
+    isLogged = false;
     notifyListeners();
   }
 
@@ -32,9 +50,8 @@ class User extends ChangeNotifier {
     if (savedToken != null) {
       authToken = savedToken;
       isLogged = true;
-      return  true;
+      return true;
     }
     return false;
   }
-
 }
